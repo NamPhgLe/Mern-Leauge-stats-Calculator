@@ -1,0 +1,13 @@
+:root {
+  --bg-color: #000000;       /* pure black background */
+  --text-color: #ffffff;     /* pure white text */
+  --border-color: #555555;   /* medium gray border */
+  --primary-color: #ffffff;  /* white for buttons/links */
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+}

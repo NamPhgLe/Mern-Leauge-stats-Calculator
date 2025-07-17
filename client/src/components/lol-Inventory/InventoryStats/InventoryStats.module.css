@@ -1,0 +1,60 @@
+.container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .scrollArea {
+    display: flex;
+    flex-wrap: wrap;
+    max-height: calc(3 * 3rem);
+    overflow-x: auto; 
+    overflow-y: hidden; 
+    gap: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+    .statLine {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    white-space: nowrap;           
+  }
+  
+  .statLabel {
+    font-weight: bold;
+    font-size: 1rem;
+  }
+  
+  .separator {
+    margin: 0 0.5rem;
+    color: #aaa;
+  }
+  
+  .sourcesList {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+    overflow: hidden;       
+  }
+  
+  .sourceItem {
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  
+  .itemIcon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    vertical-align: middle;
+    margin-left: 0.25rem;
+  }

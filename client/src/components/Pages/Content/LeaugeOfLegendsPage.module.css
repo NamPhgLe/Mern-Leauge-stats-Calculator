@@ -1,0 +1,179 @@
+.pageContainer {
+  padding: 2rem;
+  font-family: Inter, sans-serif;
+}
+
+.title {
+  font-family: Cinzel, serif;
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  margin-bottom: 2rem;
+}
+
+.regionTabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.regionButton {
+  --delay: 0ms;
+  opacity: 0;
+  animation: slideInFromLeft 0.4s forwards;
+  animation-delay: var(--delay);
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  background-color: #e0e0e0;
+  color: #000;
+}
+
+.regionButton.active {
+  background-color: #c00000;
+  color: #fff;
+}
+
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+@keyframes slideInFromLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInFromBottom {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+
+.slideInCard {
+  --delay: 0ms; 
+  opacity: 0;
+  animation: slideInFromBottom 0.4s forwards;
+  animation-delay: var(--delay);
+}
+
+.championCard {
+  position: relative;
+  z-index: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #fff;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  will-change: transform;
+}
+
+.championCard:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+}
+.scrollContainer {
+  display: flex;
+  overflow-x: auto;
+  gap: 1.5rem;
+  padding-bottom: 1rem;
+  scrollbar-width: thin;
+}
+
+.scrollContainer::-webkit-scrollbar {
+  height: 6px;
+}
+
+.scrollContainer::-webkit-scrollbar-thumb {
+  background: #c00000;
+  border-radius: 3px;
+}
+
+.scrollContainer::-webkit-scrollbar {
+  height: 6px;
+}
+
+.scrollContainer::-webkit-scrollbar-thumb {
+  background-color: #c00000;
+  border-radius: 3px;
+}
+.leagueContainer,
+.inventoryContainer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  width: 100%;
+  top: 60px;
+  height: 100vh;
+  will-change: transform;
+  transition: transform 0.3s ease-out;
+  overflow-y: auto;
+  z-index: 1;
+}
+
+.leagueContainer {
+  top: 0;
+  background-color: white;
+  z-index: 2;
+}
+
+.inventoryContainer {
+  top: 100vh; 
+  background-color: white;
+  z-index: 3;
+}
+
+.slideUpOut {
+  transform: translateY(-100vh);
+  transition-duration: 0.35s;
+  z-index: 1;
+}
+
+.slideUpIn {
+  transform: translateY(-100vh);
+  transition-duration: 0.35s;
+  z-index: 3;
+}
+
+.slideReset {
+  transform: translateY(0);
+  transition-duration: 0.35s;
+  z-index: 2;
+}
+
+.slideResetDown {
+  transform: translateY(0);
+  top: 100vh; 
+  transition-duration: 0.35s;
+  z-index: 1;
+}
+.toggleButton {
+  position: fixed;    
+  bottom: 20px;        
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  padding: 0.75rem 1.5rem;
+  font-weight: 700;
+  font-size: 1rem;
+  border: none;
+  border-radius: 30px;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(192, 0, 0, 0.6);
+  transition: all 0.35s ease;
+  background-color: #c00000;
+}
+
+
+.toggleButton:hover {
+  background-color: #a00000;
+}
