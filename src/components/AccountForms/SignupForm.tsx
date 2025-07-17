@@ -15,14 +15,19 @@ interface ErrorResponse {
 
 type ServerResponse = SuccessResponse | ErrorResponse;
 
-const SignupForm: React.FC<{ setLoggedIn: (value: boolean) => void }> = ({ setLoggedIn }) => {  const [email, setEmail] = useState('');
+const SignupForm: React.FC<{ setSignIn: (value: boolean) => void }> = ({ setSignIn }) => {  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const { showPopup } = usePopup();
   const navigate = useNavigate();
 
-  const apiUrl = import.meta.env.VITE_API_URL;
-
+  const getApiUrl = () => {
+    return window.location.hostname.includes('localhost')
+      ? 'http://localhost:5000'
+      : import.meta.env.VITE_API_URL;
+  };
+  
+  const apiUrl = getApiUrl();
 
 
   const handleSubmit = async (e: any) => {
@@ -42,7 +47,7 @@ const SignupForm: React.FC<{ setLoggedIn: (value: boolean) => void }> = ({ setLo
 
       if ('success' in data) {
         showPopup('Sign Up Successful!');
-        setLoggedIn(true);
+        setSignIn(true);
         navigate('/');
       }
     } catch (error) {

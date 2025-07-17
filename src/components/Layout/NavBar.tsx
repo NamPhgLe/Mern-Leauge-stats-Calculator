@@ -3,11 +3,11 @@ import { Link, useLocation } from 'react-router-dom';
 import styles from './NavBar.module.css';
 
 interface NavBarProps {
-  loggedIn: boolean;
-  onLogout: () => void;
+  signin: boolean;
+  onSignout: () => void;
 }
 
-const NavBar: React.FC<NavBarProps> = ({ loggedIn, onLogout }) => {
+const NavBar: React.FC<NavBarProps> = ({ signin, onSignout }) => {
   const location = useLocation();
 
   return (
@@ -21,14 +21,14 @@ const NavBar: React.FC<NavBarProps> = ({ loggedIn, onLogout }) => {
             Home
           </Link>
         </li>
-        {!loggedIn && (
+        {!signin && (
           <>
             <li>
               <Link
-                to="/login"
-                className={location.pathname === '/login' ? styles.active : undefined}
+                to="/signin"
+                className={location.pathname === '/signin' ? styles.active : undefined}
               >
-                Login
+                Sign In
               </Link>
             </li>
             <li>
@@ -36,15 +36,15 @@ const NavBar: React.FC<NavBarProps> = ({ loggedIn, onLogout }) => {
                 to="/signup"
                 className={location.pathname === '/signup' ? styles.active : undefined}
               >
-                Signup
+                Sign Up
               </Link>
             </li>
           </>
         )}
-        {loggedIn && (
+        {signin && (
           <li>
-            <button onClick={onLogout} className={styles.logoutButton}>
-              Logout
+            <button onClick={onSignout} className={styles.signOutButton}>
+              Sign Out
             </button>
           </li>
         )}

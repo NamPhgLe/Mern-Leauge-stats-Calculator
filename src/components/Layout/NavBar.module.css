@@ -2,15 +2,13 @@
   position: fixed;
   top: 0;
   right: 0;
-  background-color: #fff;
+  background-color: transparent;
   padding: 1rem;
   font-family: 'Inter', sans-serif;
   display: flex;
   justify-content: flex-end;
   user-select: none;
   z-index: 1000;
-  max-width: 1px;
-
 }
 
 .navList {
@@ -36,7 +34,7 @@
   text-decoration: none;
 }
 
-.logoutButton {
+.signOutButton {
   background: none;
   border: none;
   padding: 0;
