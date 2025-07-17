@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from 'react';
-import MapFilter from '../ItemFilters/ItemMapFilter';
 import styles from '../itemStats.module.css';
 import ItemStatsFilter from '../ItemFilters/ItemStats/ItemStatsFilter';
 import { useFilteredItems, useAllStatKeys } from '../../../hooks/useItemFilter';
@@ -19,11 +18,10 @@ export default function ItemFetcher() {
   const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
   const [nextItemId, setNextItemId] = useState<string | null>(null);
   const [isClosing, setIsClosing] = useState(false);
-  const [selectedMap, setSelectedMap] = useState<string | null>('11');
-  const [selectedSort, setSelectedSort] = useState<string>('gold');
+  const [selectedMap] = useState<string | null>('11');
+  const [selectedSort] = useState<string>('gold');
   const [selectedStats, setSelectedStats] = useState<string[]>(['gold']);
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const [showInventoryStats, setShowInventoryStats] = useState<boolean>(true);
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -85,10 +83,6 @@ export default function ItemFetcher() {
     return () => clearTimeout(t);
   }, [isClosing, nextItemId]);
 
-  const onClose = () => {
-    setNextItemId(null);
-    setIsClosing(true);
-  };
 
   const openItemPanel = (id: string) => {
     if (!selectedItemId) {

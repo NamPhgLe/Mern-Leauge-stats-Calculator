@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import ItemStats from '../ItemStats/ItemStats';
 import styles from '../itemStats.module.css';
 import type { ItemData } from '../../../constants/itemData';

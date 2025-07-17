@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { KitingGame } from './KitingGame';
 import type { ItemData } from '../../../constants/itemData';
 

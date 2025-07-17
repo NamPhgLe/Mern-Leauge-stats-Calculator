@@ -1,4 +1,3 @@
-import React from 'react';
 import type { ChampionDetail } from '../../constants/champData';
 
 interface ChampionAbilitiesProps {

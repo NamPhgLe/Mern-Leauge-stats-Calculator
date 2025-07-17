@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { GameCanvas } from './GameCanvas';
 import type { Position } from '../Types/Position';
 import type { ItemData } from '../../../constants/itemData';
@@ -21,7 +21,7 @@ export function KitingGame({ stats, items, trinket }: KitingGameProps) {
   const [cursorPos, setCursorPos] = useState<Position | null>(null);
   const [showAttackRangeCircle, setShowAttackRangeCircle] = useState(true);
 
-  const handleRightClick = (pos: Position, clickedEnemy: boolean) => {
+  const handleRightClick = (pos: Position) => {
     setCursorPos(pos);
   };
 

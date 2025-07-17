@@ -1,5 +1,4 @@
 import type { PlayerState } from '../player/usePlayer';
-import { statNameMap } from '../../../constants/statNameMap';
 
 export function drawPlayerStats(
   ctx: CanvasRenderingContext2D,

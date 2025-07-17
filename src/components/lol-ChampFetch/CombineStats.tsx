@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import ChampionSelector from './ChampSelector';
 import LevelSelector from './ChampLevelSelector';
 import type { ItemData } from '../../constants/itemData';
 import { statNameMap } from '../../constants/statNameMap';
@@ -7,8 +6,6 @@ import { parseItemDescription } from '../../utils/parseItemDescription';
 import { calculateLevelStat, calculateAttackSpeed } from '../../utils/champUtils';
 import type { ChampionDetail } from '../../constants/champData';
 import ChampionAbilities from './ChampAbilites';
-// import {KitingGame} from '../Game/KitingGame';
-import { KitingGame } from '../KitingGame/GameLoop/KitingGame'
 
 interface CombinedStatsProps {
   level: number;
@@ -160,12 +157,6 @@ export default function CombinedStats({ championId, items, trinket, version }: C
       {championData && version && (
         <ChampionAbilities championData={championData} version={version} />
       )}
-
-      {/* {combinedStats && Object.keys(combinedStats).length > 0 ? (
-        <KitingGame stats={combinedStats} itemStats={combinedItemStats} items={items || []} trinket={trinket} />
-      ) : (
-        <p>Loading stats...</p>
-      )} */}
     </div>
   );
 }

@@ -1,14 +1,11 @@
 
 import { Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import ItemFetcher from './components/lol-ItemFetch/ItemFetch/ItemFetch';
-import ChampionFetcher from './components/lol-ChampFetch/ChampStats';
 import SignupForm from './components/AccountForms/SignupForm';
 import LoginForm from './components/AccountForms/LoginForm';
 import NavBar from './components/Layout/NavBar';
-import Layout from './components/Layout/Layout'
 import HomePage from './components/Pages/Home/HomePage';
-import React, { Suspense, lazy } from 'react';
+import { Suspense, lazy } from 'react';
 import { PopupProvider } from './components/Layout/PopupContext';
 import Popup from './components/Layout/Popup';
 import axios from 'axios';

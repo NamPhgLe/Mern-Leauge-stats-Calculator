@@ -1,6 +1,4 @@
-import React from 'react';
 import styles from './Inventory.module.css';
-import eye from '../../../assets/eye.png'
 import type { ItemData } from '../../../constants/itemData';
 
 interface TrinketProps {

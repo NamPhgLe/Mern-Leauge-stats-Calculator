@@ -7,7 +7,7 @@ interface InventoryPageProps {
   onClose: () => void;
 }
 
-const InventoryPage: React.FC<InventoryPageProps> = ({ isOpen, onClose }) => {
+const InventoryPage: React.FC<InventoryPageProps> = ({ isOpen }) => {
   return (
     <div className={`${styles.inventoryPanel} ${isOpen ? styles.open : ''}`}>
         <ItemFetcher />

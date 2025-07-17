@@ -6,7 +6,6 @@ import ChampionStatsPage from './ChampionStatsPage';
 import { useInventory } from '../../../hooks/useInventory';
 import type { ItemData } from '../../../constants/itemData';
 import InventoryPage from './InventoryPage';
-import NavBar from '../../Layout/NavBar';
 type ItemMap = Record<string, ItemData>;
 
 const championMetaMap = championMetaRaw as unknown as RawMeta;
@@ -30,10 +29,10 @@ const LeagueOfLegendsPage: React.FC = () => {
   const [isHoveringScrollContainer, setIsHoveringScrollContainer] = useState(false);
   const [items, setItems] = useState<ItemMap | null>(null);
   const [version, setVersion] = useState<string | null>(null);
-  const [level, setLevel] = useState<number>(1);
+  const [level] = useState<number>(1);
   const [showInventory, setShowInventory] = useState(false);
 
-  const { inventory, trinket, slotCount, addItem: handleBuyItem, removeItem, removeTrinket, increaseSlots, decreaseSlots } = useInventory();
+  const { inventory, trinket } = useInventory();
 
   useEffect(() => {
     const loadItems = async () => {

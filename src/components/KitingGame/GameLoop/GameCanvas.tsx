@@ -223,7 +223,7 @@ export function GameCanvas({
   let row = 0;
   let col = 0;
 
-  items.slice(0, items.length).forEach(({ img }, index) => {
+  items.slice(0, items.length).forEach(({ img }) => {
     const x = inventoryX + col * (iconSize + padding);
     const y = inventoryY + row * (iconSize + padding);
     const image = new Image();

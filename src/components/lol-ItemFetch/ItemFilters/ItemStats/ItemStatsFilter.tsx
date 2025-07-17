@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from './ItemStatsFilter.module.css';
 import { statNameMap } from '../../../../constants/statNameMap';
 import { riotStatKeyMap } from '../../../../constants/riotStatNameMap';

@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './InventoryStats.module.css';
 import type { ItemData } from '../../../constants/itemData';
 import { statNameMap } from '../../../constants/statNameMap';

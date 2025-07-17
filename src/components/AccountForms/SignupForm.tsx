@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { usePopup } from '../Layout/PopupContext';
 
-import { useEffect } from 'react';
 interface SuccessResponse {
   success: {
     email: string;
