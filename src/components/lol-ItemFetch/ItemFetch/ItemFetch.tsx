@@ -9,12 +9,20 @@ import ItemDescription from '../ItemDescription/ItemDescription';
 import { useInventory } from '../../../hooks/useInventory';
 import Inventory from '../../lol-Inventory/InventroyDisplay/Inventory';
 import InventoryStats from '../../lol-Inventory/InventoryStats/InventoryStats';
-
+import useLatestVersion from '../../../hooks/useLatestVersion';
+import CombinedStats from '../../lol-ChampFetch/CombineStats';
 type ItemMap = Record<string, ItemData>;
 
-export default function ItemFetcher() {
+interface ItemFetcherProps {
+  championId: string | null;
+  level: number;
+}
+
+export default function ItemFetcher({
+  championId,
+  level,
+}: ItemFetcherProps) {
   const [items, setItems] = useState<ItemMap | null>(null);
-  const [version, setVersion] = useState<string | null>(null);
   const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
   const [nextItemId, setNextItemId] = useState<string | null>(null);
   const [isClosing, setIsClosing] = useState(false);
@@ -22,8 +30,12 @@ export default function ItemFetcher() {
   const [selectedSort] = useState<string>('gold');
   const [selectedStats, setSelectedStats] = useState<string[]>(['gold']);
   const [searchTerm, setSearchTerm] = useState<string>('');
-
   const containerRef = useRef<HTMLDivElement>(null);
+  const [showMore, setShowMore] = useState(false);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const bottomRef = useRef<HTMLDivElement>(null);
+
+  const version = useLatestVersion();
 
   const allStatKeys = useAllStatKeys(items);
   const filteredItems = useFilteredItems(
@@ -36,8 +48,8 @@ export default function ItemFetcher() {
   const selectedItem = selectedItemId && items ? items[selectedItemId] : null;
 
   const {
-    inventory,
-    trinket,
+    inventory: inventoryState,
+    trinket: trinketState,
     slotCount,
     addItem: handleBuyItem,
     removeItem,
@@ -46,19 +58,15 @@ export default function ItemFetcher() {
     decreaseSlots,
   } = useInventory();
 
-  const hasInventoryItems = inventory.length > 0 || !!trinket;
+  const hasInventoryItems = inventoryState.length > 0 || !!trinketState;
 
   useEffect(() => {
-    async function loadData() {
-      try {
-        const versions = await axios.get<string[]>(
-          'https://ddragon.leagueoflegends.com/api/versions.json'
-        );
-        const latest = versions.data[0];
-        setVersion(latest);
+    if (!version) return;
 
+    async function loadItems() {
+      try {
         const itemsRes = await axios.get(
-          `https://ddragon.leagueoflegends.com/cdn/${latest}/data/en_US/item.json`
+          `https://ddragon.leagueoflegends.com/cdn/${version}/data/en_US/item.json`
         );
         const raw = itemsRes.data.data as Record<string, ItemData>;
         const map: Record<string, ItemData> = {};
@@ -70,8 +78,9 @@ export default function ItemFetcher() {
         console.error(err);
       }
     }
-    loadData();
-  }, []);
+
+    loadItems();
+  }, [version]);
 
   useEffect(() => {
     if (!isClosing) return;
@@ -83,6 +92,13 @@ export default function ItemFetcher() {
     return () => clearTimeout(t);
   }, [isClosing, nextItemId]);
 
+  useEffect(() => {
+    if (showMore) {
+      setTimeout(() => {
+        bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }, 300);
+    }
+  }, [showMore]);
 
   const openItemPanel = (id: string) => {
     if (!selectedItemId) {
@@ -151,8 +167,8 @@ export default function ItemFetcher() {
 
       <div className={styles.inventoryRow}>
         <Inventory
-          items={inventory}
-          trinket={trinket}
+          items={inventoryState}
+          trinket={trinketState}
           slotCount={slotCount}
           onRemoveItem={removeItem}
           onRemoveTrinket={removeTrinket}
@@ -160,11 +176,47 @@ export default function ItemFetcher() {
           onDecreaseSlots={decreaseSlots}
         />
 
-        {hasInventoryItems && (
-          <div className={`${styles.inventoryStatsPanel}`}>
-            <InventoryStats items={inventory} trinket={trinket} />
+
+        {hasInventoryItems && championId && version && (
+          <div className={`${styles.itemPanel} ${showMore ? styles.expanded : ''}`} ref={panelRef} >
+            <div className={styles.toggleButtonWrapper}>
+              <button className={`${styles.toggleButton}`} onClick={() => setShowMore((prev) => !prev)}>
+                {showMore ? 'Retract Stats' : 'Extend Stats'}
+              </button>
+            </div>
+            <div className={styles.statsColumns}>
+              <div className={styles.statsColumn}>
+                <h4>Total Stats</h4>
+                <CombinedStats
+                  championId={championId}
+                  level={level}
+                  items={inventoryState}
+                  trinket={trinketState}
+                  version={version}
+                  showMore={showMore}
+                />
+              </div>
+              <div className={styles.statsColumn}>
+                <h4>Champion Stats</h4>
+                <CombinedStats
+                  championId={championId}
+                  level={level}
+                  items={[]}
+                  trinket={null}
+                  version={version}
+                  showMore={showMore}
+                />
+              </div>
+             
+              <div className={styles.statsColumn}>
+                <h4>Item Stats</h4>
+                <InventoryStats items={inventoryState} trinket={trinketState} />
+              </div>
+              <div ref={bottomRef} />
+            </div>
           </div>
         )}
+
       </div>
     </div>
   );

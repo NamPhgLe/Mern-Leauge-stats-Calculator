@@ -8,8 +8,8 @@ interface ChampionStatsPageProps {
   level: number;
   onClose: () => void;
   isClosing: boolean;
-  items: ItemData[];
-  trinket: ItemData | null;
+  items: { item: ItemData; img: string }[];
+  trinket: { item: ItemData; img: string } | null; 
 }
 
 const ChampionStatsPage: React.FC<ChampionStatsPageProps> = ({
@@ -40,19 +40,10 @@ const ChampionStatsPage: React.FC<ChampionStatsPageProps> = ({
       <CombinedStats
         championId={championId}
         level={level}
-        items={items.map(item => ({
-          item,
-          img: `https://ddragon.leagueoflegends.com/cdn/${version}/img/item/${item.id}.png`,
-        }))}
-        trinket={
-          trinket
-            ? {
-              item: trinket,
-              img: `https://ddragon.leagueoflegends.com/cdn/${version}/img/item/${trinket.id}.png`,
-            }
-            : null
-        }
+        items={items}
+        trinket={trinket}
         version={version}
+        showMore={true}
       />
     </div>
   );

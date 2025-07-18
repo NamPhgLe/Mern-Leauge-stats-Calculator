@@ -173,7 +173,7 @@ const LeagueOfLegendsPage: React.FC = () => {
               overflowY: 'hidden',
             }}
           >
-            
+
             <h1 style={{ fontFamily: 'Cinzel, serif', marginBottom: '1rem' }}>
               League of Legends - Read About Champions
             </h1>
@@ -300,11 +300,11 @@ const LeagueOfLegendsPage: React.FC = () => {
             <div style={{ flex: `0 0 ${panelFlex}`, marginLeft: '1rem', overflowY: 'auto' }}>
               <ChampionStatsPage
                 championId={currentChampion}
+                level={level}
                 onClose={handlePanelClose}
                 isClosing={isClosing}
-                items={inventory.map(({ item }) => item)}
-                trinket={trinket ? trinket.item : null}
-                level={level}
+                items={inventory}      
+                trinket={trinket} 
               />
             </div>
           )}
@@ -315,14 +315,18 @@ const LeagueOfLegendsPage: React.FC = () => {
         className={`${styles.inventoryContainer} ${showInventory ? styles.slideUpIn : styles.slideResetDown
           }`}
       >
-        <InventoryPage isOpen={true} onClose={() => setShowInventory(false)} />
+        <InventoryPage
+          isOpen={showInventory}
+          onClose={() => setShowInventory(false)}
+          championId={currentChampion}
+          level={level}
+        />
       </div>
-
       <button
         onClick={() => setShowInventory(prev => !prev)}
-        className={styles.toggleButton}
+        className={`${styles.toggleButton} ${showInventory ? styles.toggleBottom : styles.toggleTop}`}
       >
-        {showInventory ? 'Close Inventory' : 'Open Inventory'}
+        {showInventory ? 'Open Champion Page' : 'Open Inventory'}
       </button>
     </>
   );

@@ -29,32 +29,31 @@
     font-weight: 600;
   }
   
-  /* League-like stat colors */
   .physicalDamage {
-    color: #ff4d4d; /* red */
+    color: #ff4d4d;
   }
   
   .magicDamage {
-    color: #5d45ff; /* blue-purple */
+    color: #5d45ff; 
   }
   
   .health {
-    color: #ff6666; /* light red */
+    color: #ff6666; 
   }
   
   .armor {
-    color: #9d9d9d; /* gray */
+    color: #9d9d9d; 
   }
   
   .cooldown {
-    color: #00bcd4; /* cyan */
+    color: #00bcd4; 
   }
   
   .movementSpeed {
-    color: #42ba96; /* greenish */
+    color: #42ba96; 
   }
   
   .mana {
-    color: #4a90e2; /* mana blue */
+    color: #4a90e2; 
   }
   

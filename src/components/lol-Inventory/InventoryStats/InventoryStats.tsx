@@ -94,10 +94,9 @@ export default function InventoryStats({ items, trinket }: InventoryStatsProps) 
     ...Object.keys(statContributions).filter((k) => !STAT_ORDER.includes(k)),
   ];
 
-
   return (
     <div className={styles.container}>
-      <div ref={containerRef} className={styles.scrollArea}></div>
+      <div ref={containerRef} className={styles.scrollArea}>
       {allStatKeys
         .filter((stat) => statContributions[stat])
         .map((stat) => (
@@ -120,6 +119,7 @@ export default function InventoryStats({ items, trinket }: InventoryStatsProps) 
             </div>
           </div>
         ))}
+        </div>
     </div>
   );
 }
