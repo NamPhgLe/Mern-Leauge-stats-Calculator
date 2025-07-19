@@ -1,0 +1,106 @@
+.container {
+    text-align: center;
+
+  }
+  
+  .title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .button {
+    font-size: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #c00000;
+    color: #fff;
+    transition: background-color 0.2s ease;
+  }
+  
+  .button:hover {
+    background-color: #a00000;
+  }
+  
+  .optionsToggle {
+    font-size: 16px;
+    margin-top: 1rem;
+    background: none;
+    border: none;
+    color: #555;
+    cursor: pointer;
+  }
+  
+  .optionsPanel {
+    margin-top: 20px;
+    text-align: left;
+  }
+  
+  .featureBoxes {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+  
+  .featureBox {
+    flex: 1;
+    max-width: 200px;
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+    border: 2px solid #ccc;
+    background: #f5f5f5;
+    cursor: not-allowed;
+    opacity: 0.6;
+    transition: background 0.3s ease, opacity 0.3s ease;
+    animation: slideInFromBottom 0.4s forwards;
+    animation-delay: var(--delay, 0ms);
+  }
+  
+  .featureBoxEnabled {
+    background: #fff;
+    cursor: pointer;
+    opacity: 1;
+  }
+  
+  .featureBoxEnabled .button {
+    margin-top: 0.5rem;
+  }
+  
+  @keyframes slideInFromLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes slideInFromBottom {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .canvasWrapper {
+    width: 600px;
+    height: 400px;
+    user-select: none;
+    margin: 2rem auto;
+  }
+  
+  .gameTitle {
+    margin-bottom: 8px;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  

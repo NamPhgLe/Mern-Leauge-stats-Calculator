@@ -177,37 +177,40 @@ export default function ItemFetcher({
         />
 
 
-        {hasInventoryItems && championId && version && (
-          <div className={`${styles.itemPanel} ${showMore ? styles.expanded : ''}`} ref={panelRef} >
+        {hasInventoryItems && (
+          <div className={`${styles.itemPanel} ${showMore ? styles.expanded : ''}`} ref={panelRef}>
             <div className={styles.toggleButtonWrapper}>
-              <button className={`${styles.toggleButton}`} onClick={() => setShowMore((prev) => !prev)}>
+              <button className={styles.toggleButton} onClick={() => setShowMore((prev) => !prev)}>
                 {showMore ? 'Retract Stats' : 'Extend Stats'}
               </button>
             </div>
             <div className={styles.statsColumns}>
-              <div className={styles.statsColumn}>
-                <h4>Total Stats</h4>
-                <CombinedStats
-                  championId={championId}
-                  level={level}
-                  items={inventoryState}
-                  trinket={trinketState}
-                  version={version}
-                  showMore={showMore}
-                />
-              </div>
-              <div className={styles.statsColumn}>
-                <h4>Champion Stats</h4>
-                <CombinedStats
-                  championId={championId}
-                  level={level}
-                  items={[]}
-                  trinket={null}
-                  version={version}
-                  showMore={showMore}
-                />
-              </div>
-             
+              {championId && version && (
+                <>
+                  <div className={styles.statsColumn}>
+                    <h4>Total Stats</h4>
+                    <CombinedStats
+                      championId={championId}
+                      level={level}
+                      items={inventoryState}
+                      trinket={trinketState}
+                      version={version}
+                      showMore={showMore}
+                    />
+                  </div>
+                  <div className={styles.statsColumn}>
+                    <h4>Champion Stats</h4>
+                    <CombinedStats
+                      championId={championId}
+                      level={level}
+                      items={[]}
+                      trinket={null}
+                      version={version}
+                      showMore={showMore}
+                    />
+                  </div>
+                </>
+              )}
               <div className={styles.statsColumn}>
                 <h4>Item Stats</h4>
                 <InventoryStats items={inventoryState} trinket={trinketState} />

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { KitingGame } from './KitingGame';
 import type { ItemData } from '../../../constants/itemData';
+import styles from './GameMenu.module.css';
 
 interface GameMenuProps {
   stats: Record<string, number>;
@@ -24,19 +25,44 @@ export function GameMenu({ stats, itemStats, items, trinket }: GameMenuProps) {
     );
   }
 
+  const features = [
+    { title: 'Kiting Game', action: () => setStarted(true), enabled: true },
+    { title: 'Upcoming...', action: () => {}, enabled: false },
+    { title: 'Upcoming...', action: () => {}, enabled: false },
+  ];
+
   return (
-    <div style={{ textAlign: 'center', padding: '50px' }}>
-      <h1>League-Style Kiting Game</h1>
-      <button onClick={() => setStarted(true)} style={{ fontSize: '20px', padding: '10px 20px' }}>
-        Start Game
-      </button>
-      <br /><br />
-      <button onClick={() => setShowOptions(prev => !prev)} style={{ fontSize: '16px' }}>
+    <div className={styles.container}>
+      <h1 className={styles.title}>Choose a Mode</h1>
+
+      <div className={styles.featureBoxes}>
+        {features.map((f, i) => (
+          <div
+            key={i}
+            onClick={f.enabled ? f.action : undefined}
+            className={
+              f.enabled
+                ? `${styles.featureBox} ${styles.featureBoxEnabled}`
+                : styles.featureBox
+            }
+          >
+            <h2>{f.title}</h2>
+            {f.enabled && (
+              <button className={styles.button}>Start</button>
+            )}
+          </div>
+        ))}
+      </div>
+
+      <button
+        onClick={() => setShowOptions((prev) => !prev)}
+        className={styles.optionsToggle}
+      >
         {showOptions ? 'Hide Options' : 'Options'}
       </button>
 
       {showOptions && (
-        <div style={{ marginTop: '20px' }}>
+        <div className={styles.optionsPanel}>
           <h3>Game Options (Coming Soon)</h3>
           <p>Customize settings like difficulty, controls, and more.</p>
         </div>

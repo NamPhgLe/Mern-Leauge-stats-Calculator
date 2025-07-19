@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { GameCanvas } from './GameCanvas';
 import type { Position } from '../Types/Position';
 import type { ItemData } from '../../../constants/itemData';
+import styles from './KitingGame.module.css';
 
 interface KitingGameProps {
   stats: Record<string, number>;
@@ -32,27 +33,27 @@ export function KitingGame({ stats, items, trinket }: KitingGameProps) {
 
   if (!gameStarted) {
     return (
-      <div style={{ textAlign: 'center', padding: '40px' }}>
-        <h1>League-Style Kiting Game</h1>
+      <div className={styles.container}>
+        <h1 className={styles.title}>League-Style Kiting Game</h1>
         <button
           onClick={() => setGameStarted(true)}
-          style={{ padding: '12px 24px', fontSize: '18px', marginBottom: '12px' }}
+          className={styles.button}
         >
           Start Game
         </button>
         <br />
         <button
           onClick={() => setShowOptions(prev => !prev)}
-          style={{ padding: '8px 16px', fontSize: '16px' }}
+          className={styles.optionsToggle}
         >
           {showOptions ? 'Hide Options' : 'Options'}
         </button>
-
+  
         {showOptions && (
-          <div style={{ marginTop: '20px' }}>
+          <div className={styles.optionsPanel}>
             <h3>Options</h3>
-
-            <div style={{ marginBottom: '12px' }}>
+  
+            <div className={styles.featureBoxEnabled}>
               <label>
                 <input
                   type="checkbox"
@@ -62,7 +63,8 @@ export function KitingGame({ stats, items, trinket }: KitingGameProps) {
                 Audio {audioEnabled ? 'On' : 'Off'}
               </label>
             </div>
-            <div style={{ marginBottom: '12px' }}>
+  
+            <div className={styles.featureBoxEnabled}>
               <label>
                 <input
                   type="checkbox"
@@ -77,23 +79,13 @@ export function KitingGame({ stats, items, trinket }: KitingGameProps) {
       </div>
     );
   }
-
+  
   return (
-    <div>
-      <h3>Kiting Game (League-style)</h3>
-      <label>
-        <input
-          type="checkbox"
-          checked={showAttackRangeCircle}
-          onChange={e => setShowAttackRangeCircle(e.target.checked)}
-        />{' '}
-        Show Attack Range
-      </label>
-
+    <div className={styles.container}>
       <div
+        className={styles.canvasWrapper}
         onMouseDown={e => e.button === 2 && setRightClickDown(true)}
         onMouseUp={e => e.button === 2 && setRightClickDown(false)}
-        style={{ width: gameWidth, height: gameHeight, userSelect: 'none' }}
         onMouseMove={e => {
           if (rightClickDown) {
             const rect = e.currentTarget.getBoundingClientRect();

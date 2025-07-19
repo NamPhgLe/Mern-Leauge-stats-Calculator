@@ -134,26 +134,26 @@
 
 .slideUpOut {
   transform: translateY(-100vh);
-  transition-duration: 0.35s;
+  transition-duration: 1s;
   z-index: 1;
 }
 
 .slideUpIn {
   transform: translateY(-100vh);
-  transition-duration: 0.35s;
+  transition-duration: 1s;
   z-index: 3;
 }
 
 .slideReset {
   transform: translateY(0);
-  transition-duration: 0.35s;
+  transition-duration: 1s;
   z-index: 2;
 }
 
 .slideResetDown {
   transform: translateY(0);
   top: 100vh; 
-  transition-duration: 0.35s;
+  transition-duration: 1s;
   z-index: 1;
 }
 
@@ -180,8 +180,48 @@
 
 .toggleBottom {
   transform: translate(-50%, 0.5vh);
+  transition-duration: 1s;
+
 }
 
 .toggleTop{
   transform: translate(-50%, calc(100vh - 35px));
+  transition-duration: 1s;
+
+}
+
+.hideButton {
+  display: none;
+}
+
+@keyframes slideUpFromBottom {
+  from {
+    transform: translate(-50%, 100vh);  }
+  to {
+    transform: translate(-50%, calc(100vh - 35px));
+  }
+}
+
+.slideUp {
+  animation: slideUpFromBottom 0.5s ease-out forwards;
+}
+
+.gameMenuContainer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50vh;
+  background-color: white;
+  transform: translateY(100vh);
+  transition: transform 0.7s ease;
+  z-index: 4;
+}
+
+.gameMenuSlideIn {
+  transform: translateY(0);
+}
+
+.halfHeight {
+  height: 50vh 
 }

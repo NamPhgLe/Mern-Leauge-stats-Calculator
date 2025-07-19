@@ -6,6 +6,8 @@ import ChampionStatsPage from './ChampionStatsPage';
 import { useInventory } from '../../../hooks/useInventory';
 import type { ItemData } from '../../../constants/itemData';
 import InventoryPage from './InventoryPage';
+import { GameMenu } from '../../KitingGame/GameLoop/GameMenu';
+
 type ItemMap = Record<string, ItemData>;
 
 const championMetaMap = championMetaRaw as unknown as RawMeta;
@@ -31,8 +33,29 @@ const LeagueOfLegendsPage: React.FC = () => {
   const [version, setVersion] = useState<string | null>(null);
   const [level] = useState<number>(1);
   const [showInventory, setShowInventory] = useState(false);
+  const [animateIn, setAnimateIn] = useState(false);
+  const [showMinigame, setShowMinigame] = useState(false);
+  const [animateMini, setAnimateMini] = useState(false);
+  const [showKitingGame, setShowKitingGame] = useState(false);
 
   const { inventory, trinket } = useInventory();
+
+  useEffect(() => {
+    if (showKitingGame) {
+      setAnimateIn(false);
+      requestAnimationFrame(() => setAnimateIn(true));
+    }
+  }, [showKitingGame]);
+  
+  useEffect(() => {
+    if (showInventory) {
+      setAnimateIn(false);
+      requestAnimationFrame(() => {
+        setAnimateIn(true);
+      })
+    }
+
+  }, [showInventory]);
 
   useEffect(() => {
     const loadItems = async () => {
@@ -62,6 +85,7 @@ const LeagueOfLegendsPage: React.FC = () => {
 
     loadItems();
   }, []);
+
   useEffect(() => {
     fetch('https://ddragon.leagueoflegends.com/api/versions.json')
       .then(res => res.json())
@@ -124,6 +148,7 @@ const LeagueOfLegendsPage: React.FC = () => {
 
   const panelFlex = '35%';
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const inventoryContainerRef = useRef<HTMLDivElement>(null);
 
 
   useEffect(() => {
@@ -149,16 +174,24 @@ const LeagueOfLegendsPage: React.FC = () => {
     };
   }, [isHoveringScrollContainer]);
 
+  useEffect(() => {
+    if (showKitingGame && inventoryContainerRef.current) {
+      const el = inventoryContainerRef.current;
+      el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' });
+    }
+  }, [showKitingGame]);
 
   const CARD_WIDTH = 225;
   const CARD_HEIGHT = 150;
 
   const IMAGE_RATIO = 0.56;
+
   return (
     <>
       <div
         className={`${styles.leagueContainer} ${showInventory ? styles.slideUpOut : styles.slideReset
-          }`}
+          }`} 
+
       >
 
         <div style={{
@@ -303,8 +336,8 @@ const LeagueOfLegendsPage: React.FC = () => {
                 level={level}
                 onClose={handlePanelClose}
                 isClosing={isClosing}
-                items={inventory}      
-                trinket={trinket} 
+                items={inventory}
+                trinket={trinket}
               />
             </div>
           )}
@@ -312,8 +345,13 @@ const LeagueOfLegendsPage: React.FC = () => {
       </div>
 
       <div
-        className={`${styles.inventoryContainer} ${showInventory ? styles.slideUpIn : styles.slideResetDown
-          }`}
+        className={`
+          ${styles.inventoryContainer} 
+          ${showInventory ? styles.slideUpIn : styles.slideResetDown}
+          ${showKitingGame ? styles.halfHeight : ''}
+          `}       
+          ref={inventoryContainerRef}
+
       >
         <InventoryPage
           isOpen={showInventory}
@@ -322,11 +360,39 @@ const LeagueOfLegendsPage: React.FC = () => {
           level={level}
         />
       </div>
+      <div
+        className={`${styles.gameMenuContainer} ${
+          showKitingGame ? styles.gameMenuSlideIn : styles.gameMenuSlideOut
+        }`}
+      >
+        {showKitingGame && (
+          <GameMenu
+            stats={{}}     
+            itemStats={{}}  
+            items={inventory}
+            trinket={trinket}
+          />
+        )}
+      </div>
+
       <button
         onClick={() => setShowInventory(prev => !prev)}
-        className={`${styles.toggleButton} ${showInventory ? styles.toggleBottom : styles.toggleTop}`}
+        className={`${styles.toggleButton} ${showInventory ? styles.toggleBottom : styles.toggleTop} ${
+          showKitingGame ? styles.hideButton : ''
+        }`}
       >
-        {showInventory ? 'Open Champion Page' : 'Open Inventory'}
+        {showInventory
+          ? `Open Champion Page${currentChampion ? ' - ' + currentChampion : ''}`
+          : `Open Inventory${currentChampion ? ' - ' + currentChampion : ''}`}
+      </button>
+
+      <button
+        onClick={() => setShowKitingGame(prev => !prev)}
+        className={`${styles.toggleButton} ${showInventory ? styles.toggleTop : styles.hideButton} ${
+          animateIn ? styles.slideUp : ''
+        }`}
+      >
+        Open MiniGame Menu
       </button>
     </>
   );
