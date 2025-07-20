@@ -180,13 +180,13 @@
 
 .toggleBottom {
   transform: translate(-50%, 0.5vh);
-  transition-duration: 1s;
+  transition-duration: 1.15s;
 
 }
 
 .toggleTop{
   transform: translate(-50%, calc(100vh - 35px));
-  transition-duration: 1s;
+  transition-duration: 1.15s;
 
 }
 

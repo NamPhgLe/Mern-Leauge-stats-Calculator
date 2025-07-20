@@ -14,39 +14,37 @@ const NavBar: React.FC<NavBarProps> = ({ signin, onSignout }) => {
     <nav className={styles.navbar}>
       <ul className={styles.navList}>
         <li>
-          <Link
-            to="/"
-            className={location.pathname === '/' ? styles.active : undefined}
-          >
+          <Link to="/" className={location.pathname === '/' ? styles.active : undefined}>
             Home
           </Link>
         </li>
         {!signin && (
           <>
             <li>
-              <Link
-                to="/signin"
-                className={location.pathname === '/signin' ? styles.active : undefined}
-              >
+              <Link to="/signin" className={location.pathname === '/signin' ? styles.active : undefined}>
                 Sign In
               </Link>
             </li>
             <li>
-              <Link
-                to="/signup"
-                className={location.pathname === '/signup' ? styles.active : undefined}
-              >
+              <Link to="/signup" className={location.pathname === '/signup' ? styles.active : undefined}>
                 Sign Up
               </Link>
             </li>
           </>
         )}
         {signin && (
-          <li>
-            <button onClick={onSignout} className={styles.signOutButton}>
-              Sign Out
-            </button>
-          </li>
+          <>
+            <li>
+              <Link to="/profile" className={location.pathname === '/profile' ? styles.active : undefined}>
+                Profile
+              </Link>
+            </li>
+            <li>
+              <button onClick={onSignout} className={styles.signOutButton}>
+                Sign Out
+              </button>
+            </li>
+          </>
         )}
       </ul>
     </nav>

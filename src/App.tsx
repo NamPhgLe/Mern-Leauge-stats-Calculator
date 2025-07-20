@@ -50,7 +50,39 @@ function App() {
       console.error('Sign out failed:', error);
     }
   };
+  
+  const handleSignIn = async (username: string, password: string) => {
+    try {
+      const response = await axios.post(`${apiUrl}/api/member/signin`, { username, password }, { withCredentials: true });
+      if (response.status === 200 && response.data.token) {
+        setSignIn(true);
+      }
+    } catch (err) {
+      console.error('Sign in failed:', err);
+      setSignIn(false);
+    }
+  };
 
+  const handleSignUp = async (email: string, password: string) => {
+    try {
+      const response = await axios.post(
+        `${apiUrl}/api/member/signup`,
+        { email, password },
+        { withCredentials: true }
+      );
+  
+      if (response.status === 200 && response.data.token) {
+        setSignIn(true);
+      } else {
+        console.error('Unexpected response:', response);
+        setSignIn(false);
+      }
+    } catch (err) {
+      console.error('Sign up failed:', err);
+      setSignIn(false);
+    }
+  };
+  
   return (
     <>
       <PopupProvider>
@@ -58,9 +90,10 @@ function App() {
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
             <Route index element={<HomePage />} />
-            <Route path="/signup" element={<SignupForm setSignIn={setSignIn} />} />
-            <Route path="/signin" element={<SigninForm setSignIn={setSignIn} />} />
+            <Route path="/signup" element={<SignupForm onSignUp={handleSignUp} />} />
+            <Route path="/signin" element={<SigninForm onSignIn={handleSignIn} />} />
             <Route path="/league" element={<LeagueOfLegendsPage />} />
+            
           </Routes>
         </Suspense>
         <Popup />

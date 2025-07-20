@@ -2,21 +2,16 @@ import React, { useState } from 'react';
 import styles from './Form.module.css';
 
 interface SignUpFormProps {
-  onSignUp: (username: string, password: string, confirmPassword: string) => void;
+  onSignUp: (email: string, password: string) => void;
 }
 
-const SignUpForm: React.FC<SignUpFormProps> = ({ onSignUp }) => {
-  const [username, setUsername] = useState('');
+const SignupForm: React.FC<SignUpFormProps> = ({ onSignUp }) => {
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
-      alert('Passwords do not match');
-      return;
-    }
-    onSignUp(username, password, confirmPassword);
+    onSignUp(email, password);
   };
 
   return (
@@ -24,14 +19,14 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSignUp }) => {
       <form className={styles.form} onSubmit={handleSubmit}>
         <h2 className={styles.title}>Sign Up</h2>
         <label className={styles.label}>
-          Username
+          Email
           <input
             className={styles.input}
-            type="text"
-            value={username}
-            onChange={e => setUsername(e.target.value)}
+            type="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
             required
-            autoComplete="username"
+            autoComplete="email"
           />
         </label>
         <label className={styles.label}>
@@ -45,21 +40,10 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSignUp }) => {
             autoComplete="new-password"
           />
         </label>
-        <label className={styles.label}>
-          Confirm Password
-          <input
-            className={styles.input}
-            type="password"
-            value={confirmPassword}
-            onChange={e => setConfirmPassword(e.target.value)}
-            required
-            autoComplete="new-password"
-          />
-        </label>
         <button className={styles.button} type="submit">Sign Up</button>
       </form>
     </div>
   );
 };
 
-export default SignUpForm;
+export default SignupForm;
