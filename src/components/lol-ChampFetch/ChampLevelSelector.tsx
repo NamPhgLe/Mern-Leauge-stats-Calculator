@@ -1,3 +1,5 @@
+import React from 'react';
+import styles from './ChampLevel.module.css';
 
 interface ChampLevelSelectorProps {
   selectedLevel: number;
@@ -13,9 +15,10 @@ export default function ChampLevelSelector({
   maxLevel = 18,
 }: ChampLevelSelectorProps) {
   return (
-    <label style={{ marginLeft: '1em' }}>
-      Level:{' '}
+    <label className={styles.label}>
+      Level:
       <select
+        className={styles.select}
         value={selectedLevel}
         onChange={(e) => onChange(parseInt(e.target.value, 10))}
       >
