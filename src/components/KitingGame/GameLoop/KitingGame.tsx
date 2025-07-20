@@ -17,10 +17,10 @@ export function KitingGame({ stats, items, trinket }: KitingGameProps) {
 
   const [gameStarted, setGameStarted] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
-  const [audioEnabled, setAudioEnabled] = useState(true);
+  const [audioEnabled, setAudioEnabled] = useState(false);
   const [rightClickDown, setRightClickDown] = useState(false);
   const [cursorPos, setCursorPos] = useState<Position | null>(null);
-  const [showAttackRangeCircle, setShowAttackRangeCircle] = useState(true);
+  const [showAttackRangeCircle, setShowAttackRangeCircle] = useState(false);
 
   const handleRightClick = (pos: Position) => {
     setCursorPos(pos);
