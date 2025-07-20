@@ -19,6 +19,17 @@ interface ChampionData {
   lane: string;
 }
 
+function getDefaultStats(): Record<string, number> {
+  return {
+    health: 1,
+    mana: 1,
+    attackDamage: 1,
+    armor: 1,
+    magicResistance: 1,
+    attackSpeed: 1,
+  };
+}
+
 const LANES = ['All', 'Top', 'Jungle', 'Mid', 'Bot', 'Support'] as const;
 type Lane = typeof LANES[number];
 
@@ -387,8 +398,8 @@ const LeagueOfLegendsPage: React.FC = () => {
       <div className={`${styles.gameMenuContainer} ${showKitingGame ? styles.gameMenuSlideIn : styles.gameMenuSlideOut}`}>
         {showKitingGame && (
           <GameMenu
-            stats={totalStats}
-            itemStats={{}}         
+            stats={Object.keys(totalStats).length === 0 ? getDefaultStats() : totalStats}
+            itemStats={{}}
             items={inventory}
             trinket={trinket}
           />

@@ -34,7 +34,7 @@ export function GameCanvas({
   stats,
   items,
   trinket,
-  showAttackRangeCircle  
+  showAttackRangeCircle
 }: GameCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const bgImageRef = useRef<HTMLImageElement>(new Image());
@@ -93,11 +93,11 @@ export function GameCanvas({
     spawnMushroom({ x: 100, y: height / 2 + 50 });
   }, []);
   useEffect(() => {
-    setMaxHealth(player.stats.health);
+    setMaxHealth(player.stats.health || 1);
   }, []);
 
   useEffect(() => {
-    setMaxMana(player.stats.mana);
+    setMaxMana(player.stats.mana || 1);
   }, []);
 
   useEffect(() => {
@@ -167,7 +167,7 @@ export function GameCanvas({
         moveToward(player.moveTarget, deltaTime);
       }
     };
-    
+
     animationFrameId = requestAnimationFrame(update);
     return () => cancelAnimationFrame(animationFrameId);
   }, [player, enemies, cursorPos, rightClickDown, bgLoaded, stats]);
@@ -204,45 +204,45 @@ export function GameCanvas({
     });
 
     const now = performance.now();
-      drawPlayerStats(ctx, player, 10, 20);
-      drawPlayerSprite(ctx, playerImageRef.current, player.position, playerSize, now, {
+    drawPlayerStats(ctx, player, 10, 20);
+    drawPlayerSprite(ctx, playerImageRef.current, player.position, playerSize, now, {
       health: player.stats.health,
       mana: player.stats.mana,
       maxHealth,
-      maxMana,  
+      maxMana,
       attackRange: stats.attackRange ?? 70,
-    },  showAttackRangeCircle );
+    }, showAttackRangeCircle);
 
 
     const slotsPerRow = 5;
-  const iconSize = 40;
-  const padding = 8;
-  const inventoryX = 10;
-  let inventoryY = height - ((Math.ceil(items.length / slotsPerRow) + 1) * (iconSize + padding));
+    const iconSize = 40;
+    const padding = 8;
+    const inventoryX = 10;
+    let inventoryY = height - ((Math.ceil(items.length / slotsPerRow) + 1) * (iconSize + padding));
 
-  let row = 0;
-  let col = 0;
+    let row = 0;
+    let col = 0;
 
-  items.slice(0, items.length).forEach(({ img }) => {
-    const x = inventoryX + col * (iconSize + padding);
-    const y = inventoryY + row * (iconSize + padding);
-    const image = new Image();
-    image.src = img;
-    ctx.drawImage(image, x, y, iconSize, iconSize);
+    items.slice(0, items.length).forEach(({ img }) => {
+      const x = inventoryX + col * (iconSize + padding);
+      const y = inventoryY + row * (iconSize + padding);
+      const image = new Image();
+      image.src = img;
+      ctx.drawImage(image, x, y, iconSize, iconSize);
 
-    col++;
-    if (col >= slotsPerRow) {
-      col = 0;
-      row++;
+      col++;
+      if (col >= slotsPerRow) {
+        col = 0;
+        row++;
+      }
+    });
+
+    if (trinket) {
+      const image = new Image();
+      image.src = trinket.img;
+      ctx.drawImage(image, inventoryX, inventoryY + row * (iconSize + padding), iconSize, iconSize);
     }
-  });
-
-  if (trinket) {
-    const image = new Image();
-    image.src = trinket.img;
-    ctx.drawImage(image, inventoryX, inventoryY + row * (iconSize + padding), iconSize, iconSize);
-  }
-    };
+  };
 
   const handleContextMenu = (e: React.MouseEvent) => {
     e.preventDefault();
