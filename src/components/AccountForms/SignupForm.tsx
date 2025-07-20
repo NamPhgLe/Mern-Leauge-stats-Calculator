@@ -1,84 +1,65 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { usePopup } from '../Layout/PopupContext';
+import styles from './Form.module.css';
 
-interface SuccessResponse {
-  success: {
-    email: string;
-    message: string;
-  };
+interface SignUpFormProps {
+  onSignUp: (username: string, password: string, confirmPassword: string) => void;
 }
 
-interface ErrorResponse {
-  error: string;
-}
-
-type ServerResponse = SuccessResponse | ErrorResponse;
-
-const SignupForm: React.FC<{ setSignIn: (value: boolean) => void }> = ({ setSignIn }) => {  const [email, setEmail] = useState('');
+const SignUpForm: React.FC<SignUpFormProps> = ({ onSignUp }) => {
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
-  const { showPopup } = usePopup();
-  const navigate = useNavigate();
+  const [confirmPassword, setConfirmPassword] = useState('');
 
-  const getApiUrl = () => {
-    return window.location.hostname.includes('localhost')
-      ? 'http://localhost:5000'
-      : import.meta.env.VITE_API_URL;
-  };
-  
-  const apiUrl = getApiUrl();
-
-
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    try {
-      const res = await fetch(`${apiUrl}/api/member/signup`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        credentials: 'include',
-        body: JSON.stringify({ email, password })
-      });
-
-      const data: ServerResponse = await res.json();
-
-      if ('success' in data) {
-        showPopup('Sign Up Successful!');
-        setSignIn(true);
-        navigate('/');
-      }
-    } catch (error) {
-      setMessage('Something went wrong. Please try again later.');
+    if (password !== confirmPassword) {
+      alert('Passwords do not match');
+      return;
     }
+    onSignUp(username, password, confirmPassword);
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          required
-        />
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-          required
-        />
-        <button type="submit">Sign Up</button>
-        {message && (
-          <pre>{message}</pre>
-        )}
+    <div className={styles.pageContainer}>
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <h2 className={styles.title}>Sign Up</h2>
+        <label className={styles.label}>
+          Username
+          <input
+            className={styles.input}
+            type="text"
+            value={username}
+            onChange={e => setUsername(e.target.value)}
+            required
+            autoComplete="username"
+          />
+        </label>
+        <label className={styles.label}>
+          Password
+          <input
+            className={styles.input}
+            type="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            required
+            autoComplete="new-password"
+          />
+        </label>
+        <label className={styles.label}>
+          Confirm Password
+          <input
+            className={styles.input}
+            type="password"
+            value={confirmPassword}
+            onChange={e => setConfirmPassword(e.target.value)}
+            required
+            autoComplete="new-password"
+          />
+        </label>
+        <button className={styles.button} type="submit">Sign Up</button>
       </form>
-    </>
+    </div>
   );
 };
 
-export default SignupForm;
+export default SignUpForm;

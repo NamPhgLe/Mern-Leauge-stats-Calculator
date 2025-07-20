@@ -1,70 +1,49 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { usePopup } from '../Layout/PopupContext';
+import styles from './Form.module.css';
 
-const SigninForm: React.FC<{ setSignIn: (value: boolean) => void }> = ({ setSignIn }) => {  const [emailOrUsername, setEmailOrUsername] = useState('');
+interface SignInFormProps {
+  onSignIn: (username: string, password: string) => void;
+}
+
+const SignInForm: React.FC<SignInFormProps> = ({ onSignIn }) => {
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
-  
-  const navigate = useNavigate();
-  const { showPopup } = usePopup();
 
-  const getApiUrl = () => {
-    return window.location.hostname.includes('localhost')
-      ? 'http://localhost:5000'
-      : import.meta.env.VITE_API_URL;
-  };
-  
-  const apiUrl = getApiUrl();
-
-  console.log('Signing out to:', apiUrl + '/api/member/signout');
-  const handleSignin = async () => {
-    try {
-      const response = await axios.post(`${apiUrl}/api/member/signin`, {
-        email: emailOrUsername.includes('@') ? emailOrUsername : undefined,
-        username: !emailOrUsername.includes('@') ? emailOrUsername : undefined,
-        password,
-      }, { withCredentials: true });
-
-      if (response.data.error) {
-        setMessage(response.data.error);
-      } else if (response.data.success) {
-        showPopup('Sign In Successful!');
-        setSignIn(true);
-        navigate('/');
-      }
-    } catch (error) {
-      setMessage('Something went wrong. Please try again.');
-      console.error(error);
-    }
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSignIn(username, password);
   };
 
   return (
-    <>
-      <div style={{ maxWidth: 400, margin: 'auto', padding: '1rem' }}>
-        <h2>Sign In</h2>
-        <input
-          type="text"
-          placeholder="Email or Username"
-          value={emailOrUsername}
-          onChange={(e) => setEmailOrUsername(e.target.value)}
-          style={{ width: '100%', marginBottom: '0.5rem' }}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          style={{ width: '100%', marginBottom: '0.5rem' }}
-        />
-        <button onClick={handleSignin} style={{ width: '100%' }}>
-          Sign In
-        </button>
-        {message && <p style={{ marginTop: '1rem' }}>{message}</p>}
-      </div>
-    </>
+    <div className={styles.pageContainer}>
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <h2 className={styles.title}>Sign In</h2>
+        <label className={styles.label}>
+          Username
+          <input
+            className={styles.input}
+            type="text"
+            value={username}
+            onChange={e => setUsername(e.target.value)}
+            required
+            autoComplete="username"
+          />
+        </label>
+        <label className={styles.label}>
+          Password
+          <input
+            className={styles.input}
+            type="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            required
+            autoComplete="current-password"
+          />
+        </label>
+        <button className={styles.button} type="submit">Sign In</button>
+      </form>
+    </div>
   );
 };
 
-export default SigninForm;
+export default SignInForm;

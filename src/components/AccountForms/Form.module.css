@@ -1,0 +1,85 @@
+.pageContainer {
+    max-width: 450px;
+    margin: 4rem auto;
+    padding: 3rem 2.5rem;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    box-sizing: border-box;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .title {
+    font-family: 'Cinzel', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: #c00000;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .label {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: #222;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .input {
+    padding: 16px 18px;
+    font-size: 1.1rem;
+    border: 2px solid #c00000;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+    font-family: 'Inter', sans-serif;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+  }
+  
+  .input::placeholder {
+    color: #a77b7b;
+    font-style: italic;
+  }
+  
+  .input:focus {
+    outline: none;
+    border-color: #7f0000;
+  }
+  
+  .button {
+    margin-top: 2rem;
+    padding: 16px 0;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: white;
+    background-color: #c00000;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: background-color 0.3s ease;
+  }
+  
+  .button:hover {
+    background-color: #a00000;
+  }
+  
+  .errorMessage {
+    color: #c00000;
+    margin-top: -0.75rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-align: center;
+  }
+  
