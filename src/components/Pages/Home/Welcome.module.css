@@ -1,0 +1,43 @@
+.welcomeContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+    color: white;
+    font-family: 'Inter', sans-serif;
+    max-width: 500px;
+    padding-left: 1rem; 
+  }
+  
+  .title {
+    font-family: 'Cinzel', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+  
+  .subtitle {
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 2rem;
+    color: #ddd;
+  }
+  
+  .getStartedButton {
+    background-color: #ffffff;
+    color: #000000;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    align-self: flex-start;
+  }
+  
+  .getStartedButton:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.7);
+  }
+  

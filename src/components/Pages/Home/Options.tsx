@@ -4,10 +4,11 @@ import styles from './HomePage.module.css';
 interface OptionsProps {
   isVisible: boolean;
   slideOut: boolean;
+  slideIn: boolean;
   onGamePick: (label: string) => void;
 }
 
-const Options: React.FC<OptionsProps> = ({ isVisible, slideOut, onGamePick }) => {
+const Options: React.FC<OptionsProps> = ({ isVisible, slideOut, slideIn, onGamePick }) => {
   const labels = ['League of Legends', 'Coming Soon...', 'Coming Soon...'];
 
   return (
@@ -16,6 +17,7 @@ const Options: React.FC<OptionsProps> = ({ isVisible, slideOut, onGamePick }) =>
         ${styles.leftPanel}
         ${isVisible ? styles.visible : ''}
         ${slideOut ? styles.slideOut : ''}
+        ${slideIn ? styles.slideIn : ''}
       `}
     >
       <h1 className={styles.welcomeTitle}>Choose a Game</h1>

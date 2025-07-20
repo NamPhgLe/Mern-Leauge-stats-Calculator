@@ -10,16 +10,27 @@ const HomePage: React.FC = () => {
   const [showOptions, setShowOptions] = useState(false);
   const [slideOutWelcome, setSlideOutWelcome] = useState(false);
   const [slideOutOptions, setSlideOutOptions] = useState(false);
+  const [slideInWelcome, setSlideInWelcome] = useState(false);
+  const [slideInOptions, setSlideInOptions] = useState(false);
   const [isLoadingLeague, setIsLoadingLeague] = useState(false);
+
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
     if (location.pathname === '/') {
-      setShowOptions(false);
       setSlideOutWelcome(false);
       setSlideOutOptions(false);
-      setIsLoadingLeague(false);
+
+      setShowOptions(false);
+
+      setTimeout(() => {
+        setSlideInWelcome(true);
+        setSlideInOptions(true);
+      }, 50);
+    } else {
+      setSlideInWelcome(false);
+      setSlideInOptions(false);
     }
   }, [location.pathname]);
 
@@ -42,6 +53,9 @@ const HomePage: React.FC = () => {
       setSlideOutWelcome(true);
       setSlideOutOptions(true);
 
+      setSlideInWelcome(false);
+      setSlideInOptions(false);
+
       setTimeout(() => {
         navigate('/league');
       }, 400);
@@ -50,13 +64,18 @@ const HomePage: React.FC = () => {
 
   return (
     <div className={styles.homePageLayout}>
-       <div className={styles.topBar} />
+      <div className={styles.topBar} />
       <Options
         isVisible={showOptions}
         slideOut={slideOutOptions}
+        slideIn={slideInOptions}
         onGamePick={handleGameSelect}
       />
-      <div className={`${styles.rightPanel} ${slideOutWelcome ? styles.slideOut : ''}`}>
+      <div
+        className={`${styles.rightPanel} ${
+          slideOutWelcome ? styles.slideOut : ''
+        } ${slideInWelcome ? styles.slideIn : ''}`}
+      >
         <Welcome togglePanel={handleGetStarted} isPanelVisible={showOptions} />
       </div>
 

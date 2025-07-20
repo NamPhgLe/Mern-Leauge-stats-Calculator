@@ -1,18 +1,18 @@
 import React from 'react';
-import styles from './HomePage.module.css';
+import styles from './Welcome.module.css';
 
 interface WelcomeProps {
   togglePanel: () => void;
   isPanelVisible: boolean;
 }
 
-const Welcome: React.FC<WelcomeProps> = ({ togglePanel, isPanelVisible }) => {
+const Welcome: React.FC<WelcomeProps> = ({ togglePanel }) => {
   return (
-    <div className={styles.rightPanel}>
-      <h1 className={styles.welcomeTitle}>Welcome to Game Simulator</h1>
-      <p className={styles.description}>Build, Create, and Experiment.</p>
+    <div className={styles.welcomeContainer}>
+      <h1 className={styles.title}>Welcome to Game Simulator</h1>
+      <p className={styles.subtitle}>Build, Create, and Experiment.</p>
       <button className={styles.getStartedButton} onClick={togglePanel}>
-        {isPanelVisible ? 'Close' : 'Get Started'}
+        Get Started
       </button>
     </div>
   );
