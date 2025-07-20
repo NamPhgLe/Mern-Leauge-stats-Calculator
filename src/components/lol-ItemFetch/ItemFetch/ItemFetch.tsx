@@ -218,17 +218,7 @@ export default function ItemFetcher({
                       trinket={trinketState}
                       version={version}
                       showMore={showMore}
-                    />
-                  </div>
-                  <div className={styles.statsColumn}>
-                    <h4>Champion Stats</h4>
-                    <CombinedStats
-                      championId={championId}
-                      level={level}
-                      items={[]}
-                      trinket={null}
-                      version={version}
-                      showMore={showMore}
+                      showlevel={true}
                     />
                   </div>
                 </>

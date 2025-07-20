@@ -3,6 +3,7 @@ import styles from './ChampionStatsPage.module.css';
 import CombinedStats from '../../lol-ChampFetch/CombineStats';
 import type { ItemData } from '../../../constants/itemData';
 import useLatestVersion from '../../../hooks/useLatestVersion';
+
 interface ChampionStatsPageProps {
   championId: string;
   level: number;
@@ -44,6 +45,7 @@ const ChampionStatsPage: React.FC<ChampionStatsPageProps> = ({
         trinket={trinket}
         version={version}
         showMore={true}
+        showlevel={true}
       />
     </div>
   );
