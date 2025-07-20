@@ -8,6 +8,7 @@ import type { ItemData } from '../../../constants/itemData';
 import InventoryPage from './InventoryPage';
 import { GameMenu } from '../../KitingGame/GameLoop/GameMenu';
 import type { ChampionDetail } from '../../../constants/champData';
+import ChampSearch from '../../lol-ChampFetch/ChampSearch'
 
 type ItemMap = Record<string, ItemData>;
 
@@ -50,6 +51,7 @@ const LeagueOfLegendsPage: React.FC = () => {
   const [currentChampionData, setCurrentChampionData] = useState<ChampionDetail | null>(null);
   const { inventory, trinket } = useInventory();
   const [totalStats, setTotalStats] = useState<Record<string, number>>({});
+  const [searchChamp, setSearchChamp] = useState('');
 
   useEffect(() => {
     if (!currentChampion || !version) {
@@ -158,7 +160,8 @@ const LeagueOfLegendsPage: React.FC = () => {
 
   const visibleChamps = champions
     .filter(c => selectedRegion === 'All' || c.region === selectedRegion)
-    .filter(c => selectedLane === 'All' || c.lane === selectedLane);
+    .filter(c => selectedLane === 'All' || c.lane === selectedLane)
+    .filter(c => c.id.toLowerCase().includes(searchChamp.toLowerCase()));
 
   const openChampionStats = (champId: string) => {
     if (!currentChampion) {
@@ -292,6 +295,13 @@ const LeagueOfLegendsPage: React.FC = () => {
                 </button>
               ))}
             </div>
+
+            <ChampSearch
+              searchChamp={searchChamp}
+              setSearchChamp={setSearchChamp}
+            />
+            <br />
+            <br />
             <div
               key={`${selectedRegion}-${selectedLane}`}
               ref={scrollContainerRef}
@@ -311,6 +321,7 @@ const LeagueOfLegendsPage: React.FC = () => {
                 minHeight: 0,
               }}
             >
+
               {visibleChamps.map((champ, idx) => (
                 <div
                   key={champ.id}

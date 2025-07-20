@@ -3,14 +3,14 @@ import styles from './ItemStats.module.css';
 
 interface ItemStatsProps {
   item: ItemData;
-  img? :string;
+  img?: string;
 }
 
 const ItemStats: React.FC<ItemStatsProps> = ({ item, img }) => {
   return (
     <div className={styles.container}>
       <div className={styles.title}>
-      {img && (
+        {img && (
           <img
             src={img}
             alt={item.name}
@@ -18,13 +18,13 @@ const ItemStats: React.FC<ItemStatsProps> = ({ item, img }) => {
           />
         )}
         <span>{item.name}</span>
-        
+
       </div>
-      <p>Id: {item.id}</p>  
+      <p>Id: {item.id}</p>
       {item.plaintext && <p>{item.plaintext}</p>}
 
       <div dangerouslySetInnerHTML={{ __html: item.description }} />
-        <br></br>
+      <br></br>
       <h6>Gold:</h6>
       <ul>
         <li><strong>Sell:</strong> {item.gold.sell}</li>

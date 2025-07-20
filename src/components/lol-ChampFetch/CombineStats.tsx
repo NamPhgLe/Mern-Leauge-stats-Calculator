@@ -13,7 +13,7 @@ interface CombinedStatsProps {
   trinket?: { item: ItemData; img: string } | null;
   version?: string | null;
   showMore?: boolean;
-  showlevel? : boolean;
+  showlevel?: boolean;
 }
 
 function getStatName(statKey: string): string {
@@ -26,7 +26,7 @@ export default function CombinedStats({
   trinket,
   version,
   showMore = false,
-  showlevel =false,
+  showlevel = false,
 }: CombinedStatsProps) {
   const [championData, setChampionData] = useState<ChampionDetail | null>(null);
   const [loading, setLoading] = useState(false);
@@ -56,11 +56,11 @@ export default function CombinedStats({
             {showMore && <h2>{championData.name} — {championData.title}</h2>}
             {showlevel && (
               <LevelSelector
-              selectedLevel={selectedLevel}
-              onChange={setSelectedLevel}
-              minLevel={1}
-              maxLevel={18}
-            />
+                selectedLevel={selectedLevel}
+                onChange={setSelectedLevel}
+                minLevel={1}
+                maxLevel={18}
+              />
             )}
           </div>
 
@@ -73,9 +73,9 @@ export default function CombinedStats({
           </ul>
 
           {showMore && (
-            <ChampionAbilities 
-              championData={championData} 
-              version={version!} 
+            <ChampionAbilities
+              championData={championData}
+              version={version!}
             />
           )}
         </>
