@@ -11,16 +11,20 @@ import Inventory from '../../lol-Inventory/InventroyDisplay/Inventory';
 import InventoryStats from '../../lol-Inventory/InventoryStats/InventoryStats';
 import useLatestVersion from '../../../hooks/useLatestVersion';
 import CombinedStats from '../../lol-ChampFetch/CombineStats';
+import { calculateCombinedStats } from '../../../utils/calculateCombinedStats';
+import type { ChampionDetail } from '../../../constants/champData';
 type ItemMap = Record<string, ItemData>;
 
 interface ItemFetcherProps {
   championId: string | null;
   level: number;
+  onCombinedStatsChange?: (stats: Record<string, number>) => void;
 }
 
 export default function ItemFetcher({
   championId,
   level,
+  onCombinedStatsChange,
 }: ItemFetcherProps) {
   const [items, setItems] = useState<ItemMap | null>(null);
   const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
@@ -34,6 +38,7 @@ export default function ItemFetcher({
   const [showMore, setShowMore] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const [championData, setChampionData] = useState<ChampionDetail | null>(null);
 
   const version = useLatestVersion();
 
@@ -59,6 +64,23 @@ export default function ItemFetcher({
   } = useInventory();
 
   const hasInventoryItems = inventoryState.length > 0 || !!trinketState;
+
+  
+  useEffect(() => {
+    if (!championId || !version) return;
+    fetch(`https://ddragon.leagueoflegends.com/cdn/${version}/data/en_US/champion/${championId}.json`)
+      .then(r => r.json())
+      .then(json => setChampionData(json.data[championId]));
+  }, [championId, version]);
+
+  const totalStats = React.useMemo(() => {
+    if (!championData) return {};
+    return calculateCombinedStats(championData, level, inventoryState, trinketState);
+  }, [championData, level, inventoryState, trinketState]);
+
+  useEffect(() => {
+    onCombinedStatsChange?.(totalStats);
+  }, [totalStats, onCombinedStatsChange]);
 
   useEffect(() => {
     if (!version) return;
