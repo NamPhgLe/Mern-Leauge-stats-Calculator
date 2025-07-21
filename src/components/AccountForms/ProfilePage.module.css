@@ -1,0 +1,46 @@
+.pageContainer {
+    max-width: 700px;
+    margin: 3rem 2rem 3rem 2rem;    padding: 0 1rem;
+    font-family: 'Inter', sans-serif;
+    color: #222;
+    line-height: 1.6;
+  }
+  
+  .title {
+    font-family: 'Cinzel', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: #c00000;
+    margin-bottom: 1.5rem;
+    text-align: left;
+    border-bottom: 2px solid #c00000;
+    padding-bottom: 0.5rem;
+  }
+  
+  .profileRow {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+  
+  .label {
+    flex: 1 0 140px;
+    font-weight: 700;
+    color: #7f0000;
+    font-size: 1.1rem;
+  }
+  
+  .value {
+    flex: 2 1 300px;
+    font-size: 1.1rem;
+    color: #333;
+    word-break: break-word;
+  }
+  
+  .errorMessage {
+    color: #c00000;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 2rem;
+  }
+  

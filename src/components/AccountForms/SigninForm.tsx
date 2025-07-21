@@ -6,12 +6,12 @@ interface SignInFormProps {
 }
 
 const SignInForm: React.FC<SignInFormProps> = ({ onSignIn }) => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSignIn(username, password);
+    onSignIn(email, password);
   };
 
   return (
@@ -19,14 +19,14 @@ const SignInForm: React.FC<SignInFormProps> = ({ onSignIn }) => {
       <form className={styles.form} onSubmit={handleSubmit}>
         <h2 className={styles.title}>Sign In</h2>
         <label className={styles.label}>
-          Username
+          Email
           <input
             className={styles.input}
-            type="text"
-            value={username}
-            onChange={e => setUsername(e.target.value)}
+            type="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
             required
-            autoComplete="username"
+            autoComplete="email"
           />
         </label>
         <label className={styles.label}>
