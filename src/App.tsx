@@ -2,7 +2,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { Suspense, lazy } from 'react';
-import { PopupProvider } from './components/Layout/PopupContext';
 import SignupForm from './components/AccountForms/SignupForm';
 import SigninForm from './components/AccountForms/SigninForm';
 import NavBar from './components/Layout/NavBar';
@@ -11,6 +10,7 @@ import Popup from './components/Layout/Popup';
 import ProfilePage from './components/AccountForms/ProfilePage';
 import RequireAuth from './components/AccountForms/RequireAuth';
 import { useNavigate } from 'react-router-dom';
+import { usePopup } from './components/Layout/PopupContext';
 
 import axios from 'axios';
 
@@ -22,6 +22,7 @@ const LeagueOfLegendsPage = lazy(() =>
 function App() {
   const [signin, setSignIn] = useState(false);
   const navigate = useNavigate();
+  const { showPopup } = usePopup();
 
   const getApiUrl = () => {
     return window.location.hostname.includes('localhost')
@@ -46,12 +47,13 @@ function App() {
     };
 
     checkSigninStatus();
-  }, []);
+  }, [showPopup, navigate]);
 
   const handleSignout = async () => {
     try {
       await axios.post(`${apiUrl}/api/member/signout`, {}, { withCredentials: true });
       setSignIn(false);
+      showPopup('Successfully Sign Out.');
       navigate('/');
     } catch (error) {
       console.error('Sign out failed:', error);
@@ -63,6 +65,7 @@ function App() {
       const response = await axios.post(`${apiUrl}/api/member/signin`, { email, password }, { withCredentials: true });
       if (response.status === 200 && response.data.token) {
         setSignIn(true);
+        showPopup('Successfully Signed In.');
         navigate('/');
       }
     } catch (err) {
@@ -78,7 +81,7 @@ function App() {
         { email, password },
         { withCredentials: true }
       );
-  
+
       if (response.status === 200 && !response.data.error) {
         setSignIn(true);
       } else {
@@ -96,27 +99,25 @@ function App() {
       setSignIn(false);
     }
   };
-  
+
   return (
     <>
-      <PopupProvider>
-        <NavBar signin={signin} onSignout={handleSignout} />
-        <Suspense fallback={<div>Loading...</div>}>
-          <Routes>
-            <Route index element={<HomePage />} />
-            <Route path="/signup" element={<SignupForm onSignUp={handleSignUp} />} />
-            <Route path="/signin" element={<SigninForm onSignIn={handleSignIn} />} />
-            <Route path="/league" element={<LeagueOfLegendsPage />} />
-            <Route path="/profile" element={
-              <RequireAuth>
-                <ProfilePage />
-              </RequireAuth>
-            }
-            />
-          </Routes>
-        </Suspense>
-        <Popup />
-      </PopupProvider>
+      <NavBar signin={signin} onSignout={handleSignout} />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route index element={<HomePage />} />
+          <Route path="/signup" element={<SignupForm onSignUp={handleSignUp} />} />
+          <Route path="/signin" element={<SigninForm onSignIn={handleSignIn} />} />
+          <Route path="/league" element={<LeagueOfLegendsPage />} />
+          <Route path="/profile" element={
+            <RequireAuth>
+              <ProfilePage />
+            </RequireAuth>
+          }
+          />
+        </Routes>
+      </Suspense>
+      <Popup />
     </>
   );
 }
