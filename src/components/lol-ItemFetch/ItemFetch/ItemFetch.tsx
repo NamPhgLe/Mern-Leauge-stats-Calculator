@@ -65,7 +65,7 @@ export default function ItemFetcher({
 
   const hasInventoryItems = inventoryState.length > 0 || !!trinketState;
 
-  
+
   useEffect(() => {
     if (!championId || !version) return;
     fetch(`https://ddragon.leagueoflegends.com/cdn/${version}/data/en_US/champion/${championId}.json`)
@@ -136,16 +136,17 @@ export default function ItemFetcher({
       <h2 className={styles.itemFetcherHeader}>
       </h2>
 
-      <ItemStatsFilter
-        availableStats={allStatKeys}
-        selectedStats={selectedStats}
-        onChange={setSelectedStats}
-      />
+      <div className={styles.filtersRow}>
+        <div className={styles.filters}>
+          <ItemSearchFilter onSearch={setSearchTerm} />
+        </div>
+        <ItemStatsFilter
+          availableStats={allStatKeys}
+          selectedStats={selectedStats}
+          onChange={setSelectedStats}
+        />
 
-      <div className={styles.filters}>
-        <ItemSearchFilter onSearch={setSearchTerm} />
       </div>
-
       <div className={styles.mainContent}>
         <div className={styles.itemsScrollContainer} ref={containerRef}>
           <div className={styles.grid}>
@@ -172,7 +173,6 @@ export default function ItemFetcher({
         </div>
         {selectedItem && (
           <div className={`${styles.panel} ${isClosing ? styles.exit : ''}`}>
-
             <ItemDescription
               item={selectedItem}
               items={items!}

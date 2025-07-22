@@ -8,7 +8,7 @@ import { calculateCombinedStats } from '../../utils/calculateCombinedStats';
 
 interface CombinedStatsProps {
   level: number;
-  championId: string;
+  championId: string | null;
   items?: { item: ItemData; img: string }[];
   trinket?: { item: ItemData; img: string } | null;
   version?: string | null;

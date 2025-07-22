@@ -10,7 +10,6 @@
   flex-wrap: nowrap;
   align-items: flex-start;
   gap: 2rem;
-  margin-top: 2rem;
 }
 
 .itemsScrollContainer {
@@ -19,7 +18,7 @@
   border-radius: 8px;
   padding: 1rem;
   overflow-y: auto;
-  max-height: 600px;
+  max-height: 500px;
   min-width: 142px;
   min-height: 172px;
   width: 800px;
@@ -118,12 +117,12 @@
 
 .itemName {
   color: #000;
-  margin-top: 0.5rem;
   font-size: 0.9rem;
   text-align: center;
   word-break: break-word;
   max-width: 100%;
-  line-height: 1.2;
+  padding: 0;
+  margin: 0;
 }
 
 .statsColumns {
@@ -232,6 +231,7 @@
   transform: translateX(100%);
   animation: slideInFromRight 0.3s forwards;
   z-index: 10;
+  max-height: 500px;
 }
 
 .itemPanel {
@@ -341,4 +341,16 @@
 
 .gameMenuContainerVisible {
   transform: translateY(0);
+}
+
+.filtersRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: nowrap; 
+  margin-bottom: 1rem;
+}
+
+.filters {
+  flex-shrink: 0; 
 }

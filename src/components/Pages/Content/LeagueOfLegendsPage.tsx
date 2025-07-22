@@ -276,7 +276,7 @@ const LeagueOfLegendsPage: React.FC = () => {
               padding: '0 0.5rem',
               borderBottom: '2px solid #ddd'
             }}>
-              {LANES.filter(l => l !== 'All').map(lane => (
+              {LANES.map(lane => (
                 <button
                   key={lane}
                   onClick={() => setSelectedLane(lane)}
@@ -417,23 +417,24 @@ const LeagueOfLegendsPage: React.FC = () => {
         )}
       </div>
 
-      <button
-        onClick={() => setShowInventory(prev => !prev)}
-        className={`${styles.toggleButton} ${showInventory ? styles.toggleBottom : styles.toggleTop} ${showKitingGame ? styles.hideButton : ''
-          }`}
-      >
-        {showInventory
-          ? `Open Champion Page${currentChampion ? ' - ' + currentChampion : ''}`
-          : `Open Inventory${currentChampion ? ' - ' + currentChampion : ''}`}
-      </button>
-
-      <button
-        onClick={() => setShowKitingGame(prev => !prev)}
-        className={`${styles.toggleButton} ${showInventory ? styles.toggleTop : styles.hideButton} ${animateIn ? styles.slideUp : ''
-          }`}
-      >
-        Open MiniGame Menu
-      </button>
+      {!showInventory && (
+        <div className={styles.hoverZone} onClick={() => setShowInventory(true)}>
+          <div className={styles.hoverLabel}>Open Inventory</div>
+          <button className={styles.arrowButton} aria-hidden="true" />
+        </div>
+      )}
+      {showInventory && (
+        <div className={`${styles.hoverZone} ${styles.topHoverZone}`} onClick={() => setShowInventory(false)}>
+          <div className={styles.hoverLabel}>Open Champion Page</div>
+          <button className={styles.arrowButton} aria-hidden="true" />
+        </div>
+      )}
+      {showInventory && (
+        <div className={styles.hoverZone} onClick={() => setShowKitingGame(prev => !prev)}>
+          <div className={styles.hoverLabel}>Open MiniGame Menu</div>
+          <button className={styles.arrowButton} aria-hidden="true" />
+        </div>
+      )}
     </>
   );
 };
