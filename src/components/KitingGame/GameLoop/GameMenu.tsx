@@ -5,12 +5,11 @@ import styles from './GameMenu.module.css';
 
 interface GameMenuProps {
   stats: Record<string, number>;
-  itemStats: Record<string, number>;
   items: { item: ItemData; img: string }[];
   trinket?: { item: ItemData; img: string } | null;
 }
 
-export function GameMenu({ stats, itemStats, items, trinket }: GameMenuProps) {
+export function GameMenu({ stats, items, trinket }: GameMenuProps) {
   const [started, setStarted] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
 
@@ -18,7 +17,6 @@ export function GameMenu({ stats, itemStats, items, trinket }: GameMenuProps) {
     return (
       <KitingGame
         stats={stats}
-        itemStats={itemStats}
         items={items}
         trinket={trinket}
       />

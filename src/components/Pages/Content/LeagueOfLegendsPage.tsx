@@ -410,7 +410,6 @@ const LeagueOfLegendsPage: React.FC = () => {
         {showKitingGame && (
           <GameMenu
             stats={Object.keys(totalStats).length === 0 ? getDefaultStats() : totalStats}
-            itemStats={{}}
             items={inventory}
             trinket={trinket}
           />

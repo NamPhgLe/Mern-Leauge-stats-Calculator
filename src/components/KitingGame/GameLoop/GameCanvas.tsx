@@ -242,6 +242,7 @@ export function GameCanvas({
       image.src = trinket.img;
       ctx.drawImage(image, inventoryX, inventoryY + row * (iconSize + padding), iconSize, iconSize);
     }
+    
   };
 
   const handleContextMenu = (e: React.MouseEvent) => {

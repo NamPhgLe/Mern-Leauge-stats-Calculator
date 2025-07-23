@@ -75,7 +75,8 @@ export default function ItemFetcher({
 
   const totalStats = React.useMemo(() => {
     if (!championData) return {};
-    return calculateCombinedStats(championData, level, inventoryState, trinketState);
+    const { total } = calculateCombinedStats(championData, level, inventoryState, trinketState);
+    return total;
   }, [championData, level, inventoryState, trinketState]);
 
   useEffect(() => {
@@ -130,6 +131,7 @@ export default function ItemFetcher({
       setIsClosing(true);
     }
   };
+
   useEffect(() => {
     if (showMore && panelRef.current) {
       panelRef.current.scrollTo({
@@ -138,6 +140,7 @@ export default function ItemFetcher({
       });
     }
   }, [showMore]);
+
   return (
     <div className={styles.itemFetcherContainer}>
       <h2 className={styles.itemFetcherHeader}>

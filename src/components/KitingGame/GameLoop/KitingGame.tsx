@@ -6,7 +6,6 @@ import styles from './KitingGame.module.css';
 
 interface KitingGameProps {
   stats: Record<string, number>;
-  itemStats: Record<string, number>;
   items: { item: ItemData; img: string }[];
   trinket?: { item: ItemData; img: string } | null;
 }
