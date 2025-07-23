@@ -65,7 +65,6 @@ export default function ItemFetcher({
 
   const hasInventoryItems = inventoryState.length > 0 || !!trinketState;
 
-
   useEffect(() => {
     if (!championId || !version) return;
     fetch(`https://ddragon.leagueoflegends.com/cdn/${version}/data/en_US/champion/${championId}.json`)
@@ -115,13 +114,6 @@ export default function ItemFetcher({
     return () => clearTimeout(t);
   }, [isClosing, nextItemId]);
 
-  useEffect(() => {
-    if (showMore) {
-      setTimeout(() => {
-        bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-      }, 300);
-    }
-  }, [showMore]);
 
   const openItemPanel = (id: string) => {
     if (!selectedItemId) {
