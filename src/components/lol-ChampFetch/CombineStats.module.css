@@ -1,0 +1,23 @@
+.statsTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .statsTable th,
+  .statsTable td {
+    border: 1px solid #ddd;
+    padding: 0.5rem 0.75rem;
+    text-align: center;
+  }
+  
+  .statsTable th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+  }
+  
+  .statsTable tbody tr:nth-child(even) {
+    background-color: #fafafa;
+  }
+  

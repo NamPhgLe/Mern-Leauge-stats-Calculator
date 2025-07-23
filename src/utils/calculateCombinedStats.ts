@@ -12,6 +12,7 @@ const renameMap: Record<string, string> = {
   attackspeed: 'attackSpeed',
   movespeed: 'moveSpeed',
   crit: 'critChance',
+  attackRange: 'attackRange',
 };
 
 function renameStatKey(key: string): string {
@@ -19,15 +20,19 @@ function renameStatKey(key: string): string {
 }
 
 export function calculateCombinedStats(
-  championData: any, 
+  championData: any,
   level: number,
   items: { item: any }[] | undefined,
   trinket: { item: any } | null | undefined
-): Record<string, number> {
-  if (!championData) return {};
+): {
+  base: Record<string, number>;
+  item: Record<string, number>;
+  total: Record<string, number>;
+} {
+  if (!championData) return { base: {}, item: {}, total: {} };
 
   const s = championData.stats;
-  const baseStats: Record<string, number> = {
+  const baseStatsRaw: Record<string, number> = {
     hp: calculateLevelStat(s.hp, s.hpperlevel, level),
     mp: calculateLevelStat(s.mp, s.mpperlevel, level),
     armor: calculateLevelStat(s.armor, s.armorperlevel, level),
@@ -41,19 +46,19 @@ export function calculateCombinedStats(
     attackRange: s.attackrange,
   };
 
-  const baseStatsRenamed: Record<string, number> = {};
-  for (const [key, value] of Object.entries(baseStats)) {
-    baseStatsRenamed[renameStatKey(key)] = value;
+  const base: Record<string, number> = {};
+  for (const [key, value] of Object.entries(baseStatsRaw)) {
+    base[renameStatKey(key)] = value;
   }
 
-  const totalItemStats: Record<string, number> = {};
+  const item: Record<string, number> = {};
   if (items) {
-    for (const { item } of items) {
-      if (!item.description) continue;
-      const stats = parseItemDescription(item.description);
+    for (const { item: itm } of items) {
+      if (!itm.description) continue;
+      const stats = parseItemDescription(itm.description);
       for (const [key, value] of Object.entries(stats)) {
         const renamedKey = renameStatKey(key);
-        totalItemStats[renamedKey] = (totalItemStats[renamedKey] || 0) + value;
+        item[renamedKey] = (item[renamedKey] || 0) + value;
       }
     }
   }
@@ -62,14 +67,14 @@ export function calculateCombinedStats(
     const trinketStats = parseItemDescription(trinket.item.description);
     for (const [key, value] of Object.entries(trinketStats)) {
       const renamedKey = renameStatKey(key);
-      totalItemStats[renamedKey] = (totalItemStats[renamedKey] || 0) + value;
+      item[renamedKey] = (item[renamedKey] || 0) + value;
     }
   }
 
-  const combinedStats = { ...baseStatsRenamed };
-  for (const [key, value] of Object.entries(totalItemStats)) {
-    combinedStats[key] = (combinedStats[key] || 0) + value;
+  const total: Record<string, number> = { ...base };
+  for (const [key, value] of Object.entries(item)) {
+    total[key] = (total[key] || 0) + value;
   }
 
-  return combinedStats;
+  return { base, item, total };
 }

@@ -130,7 +130,14 @@ export default function ItemFetcher({
       setIsClosing(true);
     }
   };
-
+  useEffect(() => {
+    if (showMore && panelRef.current) {
+      panelRef.current.scrollTo({
+        top: panelRef.current.scrollHeight,
+        behavior: 'smooth',
+      });
+    }
+  }, [showMore]);
   return (
     <div className={styles.itemFetcherContainer}>
       <h2 className={styles.itemFetcherHeader}>
@@ -145,7 +152,6 @@ export default function ItemFetcher({
           selectedStats={selectedStats}
           onChange={setSelectedStats}
         />
-
       </div>
       <div className={styles.mainContent}>
         <div className={styles.itemsScrollContainer} ref={containerRef}>
@@ -203,14 +209,13 @@ export default function ItemFetcher({
           <div className={`${styles.itemPanel} ${showMore ? styles.expanded : ''}`} ref={panelRef}>
             <div className={styles.toggleButtonWrapper}>
               <button className={styles.toggleButton} onClick={() => setShowMore((prev) => !prev)}>
-                {showMore ? 'Retract Stats' : 'Extend Stats'}
+                {showMore ? 'Retract Champion Details' : 'Extend Champion Details'}
               </button>
             </div>
             <div className={styles.statsColumns}>
               {championId && version && (
                 <>
                   <div className={styles.statsColumn}>
-                    <h4>Total Stats</h4>
                     <CombinedStats
                       championId={championId}
                       level={level}
@@ -224,7 +229,6 @@ export default function ItemFetcher({
                 </>
               )}
               <div className={styles.statsColumn}>
-                <h4>Item Stats</h4>
                 <InventoryStats items={inventoryState} trinket={trinketState} />
               </div>
               <div ref={bottomRef} />

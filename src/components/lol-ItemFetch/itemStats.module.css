@@ -236,7 +236,7 @@
 
 .itemPanel {
   flex-grow: 1;
-  height: 200px;
+  height: auto;
   background: #ffffff;
   box-shadow: -4px 0 12px rgba(0, 0, 0, 0.3);
   padding: 1.5rem;
@@ -354,3 +354,4 @@
 .filters {
   flex-shrink: 0; 
 }
+

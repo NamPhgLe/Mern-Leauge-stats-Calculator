@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import LevelSelector from './ChampLevelSelector';
 import type { ItemData } from '../../constants/itemData';
 import { statNameMap } from '../../constants/statNameMap';
 import type { ChampionDetail } from '../../constants/champData';
 import ChampionAbilities from './ChampAbilites';
 import { calculateCombinedStats } from '../../utils/calculateCombinedStats';
+import styles from './CombineStats.module.css'
 
 interface CombinedStatsProps {
   level: number;
@@ -42,8 +43,8 @@ export default function CombinedStats({
       .finally(() => setLoading(false));
   }, [championId, version]);
 
-  const combinedStats = useMemo(() => {
-    if (!championData) return {};
+  const { total, base, item } = useMemo(() => {
+    if (!championData) return { total: {}, base: {}, item: {} };
     return calculateCombinedStats(championData, selectedLevel, items, trinket);
   }, [championData, selectedLevel, items, trinket]);
 
@@ -63,15 +64,47 @@ export default function CombinedStats({
               />
             )}
           </div>
+          {Object.keys(item).length === 0 ? (
+            <table className={styles.statsTable}>
+              <thead>
+                <tr>
+                  <th>Stat</th>
+                  <th>Base</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Object.entries(base).map(([statKey, baseValue]) => (
+                  <tr key={statKey}>
+                    <td>{getStatName(statKey)}</td>
+                    <td>{baseValue.toFixed(2)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <table className={styles.statsTable}>
+              <thead>
+                <tr>
+                  <th>Stat</th>
+                  <th>Base</th>
+                  <th>Item</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Object.keys(total).map((statKey) => (
+                  <tr key={statKey}>
+                    <td>{getStatName(statKey)}</td>
+                    <td>{(base[statKey] ?? 0) === 0 ? '-' : (base[statKey] ?? 0).toFixed(2)}</td>
+                    <td>{(item[statKey] ?? 0) === 0 ? '-' : (item[statKey] ?? 0).toFixed(2)}</td>
+                    <td>{(total[statKey] ?? 0) === 0 ? '-' : (total[statKey] ?? 0).toFixed(2)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
 
-          <ul>
-            {Object.entries(combinedStats).map(([statKey, value]) => (
-              <li key={statKey}>
-                <strong>{getStatName(statKey)}:</strong> {value.toFixed(2)}
-              </li>
-            ))}
-          </ul>
-
+          <br />
           {showMore && (
             <ChampionAbilities
               championData={championData}
