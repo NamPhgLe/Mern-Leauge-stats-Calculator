@@ -5,7 +5,7 @@ import { distance } from '../Utils/collisionUtils';
 import type { Position } from '../Types/Position';
 import { drawPlayerSprite } from '../Utils/drawPlayerSprite';
 import { drawMushroomSprite } from '../Utils/drawMushroomSprite';
-import mushroomSprite from '../assets/mushroom_sprite.png';
+import mushroomSprite from '/src/components/KitingGame/assets/mushroom_sprite.png'
 import playerSprite from '../assets/player_sprite.png';
 import bgScroll from '../assets/bg_scroll.jpg';
 import { drawPlayerStats } from '../Utils/drawPlayerStats';
