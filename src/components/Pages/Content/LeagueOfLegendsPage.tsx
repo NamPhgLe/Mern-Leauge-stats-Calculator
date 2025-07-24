@@ -222,7 +222,7 @@ const LeagueOfLegendsPage: React.FC = () => {
   const CARD_HEIGHT = 150;
 
   const IMAGE_RATIO = 0.56;
-
+console.log(animateIn, currentChampionData)
   return (
     <>
       <div
@@ -230,7 +230,6 @@ const LeagueOfLegendsPage: React.FC = () => {
           }`}
 
       >
-
         <div style={{
           display: 'flex', height: '100vh',
           padding: '2rem', boxSizing: 'border-box',
