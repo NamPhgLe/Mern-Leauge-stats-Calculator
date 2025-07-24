@@ -1,4 +1,3 @@
-
 interface ChampionSelectorProps {
   championList: Record<string, string>;
   selectedChampion: string;
