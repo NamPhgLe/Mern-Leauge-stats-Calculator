@@ -143,7 +143,6 @@ export function GameCanvas({
 
     const handlePlayerBehavior = (now: number, deltaTime: number) => {
       const boss = enemies.find(e => e.type === 'boss' && e.alive);
-      console.log(stats.attackRange)
       if (player.attackTarget === 'enemy' && boss) {
         attackRange = stats.attackRange ?? 100;
         const distToBoss = distance(player.position, boss.position);
