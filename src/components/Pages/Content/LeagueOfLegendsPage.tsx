@@ -7,7 +7,6 @@ import { useInventory } from '../../../hooks/useInventory';
 import type { ItemData } from '../../../constants/itemData';
 import InventoryPage from './InventoryPage';
 import { GameMenu } from '../../KitingGame/GameLoop/GameMenu';
-import type { ChampionDetail } from '../../../constants/champData';
 import ChampSearch from '../../lol-ChampFetch/ChampSearch'
 
 type ItemMap = Record<string, ItemData>;
