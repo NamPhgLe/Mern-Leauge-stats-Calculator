@@ -46,52 +46,11 @@ const LeagueOfLegendsPage: React.FC = () => {
   const [version, setVersion] = useState<string | null>(null);
   const [level] = useState<number>(1);
   const [showInventory, setShowInventory] = useState(false);
-  const [animateIn, setAnimateIn] = useState(false);
   const [showKitingGame, setShowKitingGame] = useState(false);
-  const [currentChampionData, setCurrentChampionData] = useState<ChampionDetail | null>(null);
   const { inventory, trinket } = useInventory();
   const [totalStats, setTotalStats] = useState<Record<string, number>>({});
   const [searchChamp, setSearchChamp] = useState('');
 
-  useEffect(() => {
-    if (!currentChampion || !version) {
-      setCurrentChampionData(null);
-      return;
-    }
-
-    const fetchChampionDetail = async () => {
-      try {
-        const res = await fetch(
-          `https://ddragon.leagueoflegends.com/cdn/${version}/data/en_US/champion/${currentChampion}.json`
-        );
-        const data = await res.json();
-        setCurrentChampionData(data.data[currentChampion]);
-      } catch (err) {
-        console.error('Failed to fetch champion detail', err);
-        setCurrentChampionData(null);
-      }
-    };
-
-    fetchChampionDetail();
-  }, [currentChampion, version]);
-
-
-  useEffect(() => {
-    if (showKitingGame) {
-      setAnimateIn(false);
-      requestAnimationFrame(() => setAnimateIn(true));
-    }
-  }, [showKitingGame]);
-
-  useEffect(() => {
-    if (showInventory) {
-      setAnimateIn(false);
-      requestAnimationFrame(() => {
-        setAnimateIn(true);
-      })
-    }
-
-  }, [showInventory]);
 
   useEffect(() => {
     const loadItems = async () => {
@@ -138,7 +97,6 @@ const LeagueOfLegendsPage: React.FC = () => {
           .map(key => {
             const meta = championMetaMap[key];
             if (!meta || meta.lane === 'Unknown') {
-              console.log(`Filtered out: ${key}`, meta);
               return null;
             }
             return {
@@ -222,7 +180,6 @@ const LeagueOfLegendsPage: React.FC = () => {
   const CARD_HEIGHT = 150;
 
   const IMAGE_RATIO = 0.56;
-console.log(animateIn, currentChampionData)
   return (
     <>
       <div
